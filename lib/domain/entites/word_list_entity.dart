@@ -1,11 +1,12 @@
 import 'package:vocably/domain/entites/word.dart';
 
 class WordList {
+  final int? id;
   final String title;
   final List<Word> _words = [];
   List<Word> get words => _words;
 
-  WordList({required this.title});
+  WordList({this.id, required this.title});
 
   bool addWord(Word word) {
     if (word.notEmpty()) {
