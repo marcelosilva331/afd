@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:result_dart/result_dart.dart';
+import 'package:vocably/data/repository/implementations/word_repository_impl.dart';
+import 'package:vocably/domain/entites/word.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final WordListRepositoryImpl data = WordListRepositoryImpl();
+
+  await data.addWord(const Word(text: 'tada id 8'), 8);
+  final lists = await data.getLists().getOrDefault([]);
+
+  for (var list in await data.getWords(8).getOrDefault([])) {
+    print(list);
+  }
   runApp(const MyApp());
 }
 
