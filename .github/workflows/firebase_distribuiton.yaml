@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build --flavor prd
+        run: flutter build apk --flavor prd
 
       - name: Decode Firebase Credentials
         run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase_credentials.json
