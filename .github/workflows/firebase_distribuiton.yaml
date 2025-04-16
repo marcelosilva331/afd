@@ -23,8 +23,8 @@ jobs:
           sed -i '/android {/a \ \ \ \ ndkVersion "26.1.10909125"' android/build.gradle
 
       - name: Build APK
-        run: flutter build apk --release
-
+        run: flutter build apk --release -v
+        
       - name: Decode Firebase credentials
         run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase.json
 
