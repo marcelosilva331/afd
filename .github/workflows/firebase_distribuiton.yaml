@@ -1,0 +1,40 @@
+name: Distribute APK to Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-distribute:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0' # ou a versão do seu projeto
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Decode Firebase credentials
+        run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase.json
+
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
+      - name: Distribute to Firebase
+        run: |
+          firebase auth:login:ci --token "$(cat firebase.json | jq -r .token)" || true
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+            --app "${{ secrets.FIREBASE_APP_ID }}" \
+            --release-notes "Nova versão automática do GitHub Actions" \
+            --testers "${{ secrets.TESTERS }}"
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: firebase.json
