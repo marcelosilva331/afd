@@ -1,6 +1,8 @@
+name: Distribute APK to Firebase
+
 on:
   push:
-    branches: [test]
+    branches: [ test ]
 
 jobs:
   build-and-distribute:
@@ -22,6 +24,12 @@ jobs:
 
       - name: Build APK
         run: flutter build apk --flavor prd
+        
+      - name: Decode Firebase credentials
+        run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase-credentials.json
+
+      - name: Authenticate Firebase CLI
+        run: firebase --token $(cat firebase-credentials.json)
 
       - name: Install Firebase CLI
         run: |
@@ -29,7 +37,6 @@ jobs:
 
       - name: Distribute to Firebase
         run: |
-          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase-credentials.json
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "${{ secrets.FIREBASE_APP_ID }}" \
             --release-notes "Nova versão automática do GitHub Actions" \
