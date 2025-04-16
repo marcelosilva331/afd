@@ -28,7 +28,7 @@ jobs:
 
       # 5. Faz build com saída verbosa
       - name: Build APK (verbose)
-        run: flutter build apk --release -v
+        run: flutter build apk --flavor prd
 
       # 6. Lista os arquivos de saída do build
       - name: List APK output
