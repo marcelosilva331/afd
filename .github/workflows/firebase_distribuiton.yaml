@@ -9,29 +9,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout do código
       - uses: actions/checkout@v3
 
+      # 2. Configura Flutter
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
 
+      # 3. Instala dependências do pubspec.yaml
       - name: Install dependencies
         run: flutter pub get
 
+      # 4. Ajusta versão do NDK (necessário para alguns builds Android)
       - name: Set correct NDK version in build.gradle
         run: |
           sed -i '/android {/a \ \ \ \ ndkVersion "26.1.10909125"' android/build.gradle
 
-      - name: Build APK
+      # 5. Faz build com saída verbosa
+      - name: Build APK (verbose)
         run: flutter build apk --release -v
-        
+
+      # 6. Lista os arquivos de saída do build
+      - name: List APK output
+        run: find build/app/outputs/flutter-apk -type f
+
+      # 7. Decodifica o secret de credenciais Firebase
       - name: Decode Firebase credentials
         run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase.json
 
+      # 8. Instala o Firebase CLI
       - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | bash
 
+      # 9. Distribui para Firebase App Distribution
       - name: Distribute to Firebase
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
