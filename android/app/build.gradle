@@ -33,7 +33,7 @@ if(ketstorePropertiesFile.exists()){
 
 android {
     namespace "com.br.vocably"
-    compileSdk flutter.compileSdkVersion
+    compileSdk 34
     ndkVersion "26.1.10909125"
 
     compileOptions {
