@@ -39,6 +39,9 @@ dependencies:
   sqflite: ^2.3.3+1
   path_provider: ^2.1.4
   result_dart: ^2.1.0
+  flutter_dotenv: ^5.2.1
+  firebase_core: ^3.4.0
+  cloud_firestore: ^5.4.0
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +52,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^3.0.0 
+  flutter_flavorizr: ^2.3.0
+  flutter_launcher_icons: ^0.14.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -63,9 +68,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - .dev.env
+    - .prod.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -92,3 +97,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flavorizr: 
+  ide: "vscode"
+  flavors: 
+    dev: 
+      app:
+        name: "dev" 
+      
+      android: 
+        applicationId: "com.example.vocably.dev"
+    prd: 
+      app:
+        name: "prd" 
+      
+      android: 
+        applicationId: "com.example.vocably"
