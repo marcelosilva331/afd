@@ -1,45 +1,43 @@
-name: Distribute APK to Firebase
+name: Firebase Distribution
 
 on:
   push:
-    branches: [ test ]
+    branches:
+      - test
 
 jobs:
-  build-and-distribute:
+  distribute:
+    name: Build & Distribute
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
 
-      - name: Install dependencies
+      - name: Get Dependencies
         run: flutter pub get
 
-      - name: Set correct NDK version in build.gradle
-        run: |
-          sed -i '/android {/a \ \ \ \ ndkVersion "26.1.10909125"' android/build.gradle
-
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build --flavor prd
 
-      - name: Decode Firebase credentials
-        run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase.json
+      - name: Decode Firebase Credentials
+        run: echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase_credentials.json
 
       - name: Install Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
-
-      - name: Authenticate Firebase CLI
-        run: firebase use --add --token "${{ secrets.FIREBASE_TOKEN }}"
+          echo "$HOME/.firebase/bin" >> $GITHUB_PATH
 
       - name: Distribute to Firebase
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "${{ secrets.FIREBASE_APP_ID }}" \
-            --release-notes "Nova versão automática do GitHub Actions" \
-            --testers "${{ secrets.TESTERS}"
+            --release-notes "Nova versão automática 🎉" \
+            --testers "${{ secrets.TESTERS }}"
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: firebase.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase_credentials.json
