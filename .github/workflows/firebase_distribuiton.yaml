@@ -2,8 +2,7 @@ name: Distribute APK to Firebase
 
 on:
   push:
-    branches:
-      - main
+    branches: [ test ]
 
 jobs:
   build-and-distribute:
