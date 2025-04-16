@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '159053673523',
     projectId: 'teste-f2e96',
     storageBucket: 'teste-f2e96.firebasestorage.app',
-    iosBundleId: 'com.example.vocably',
+    iosBundleId: 'com.br.vocably',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '159053673523',
     projectId: 'teste-f2e96',
     storageBucket: 'teste-f2e96.firebasestorage.app',
-    iosBundleId: 'com.example.vocably',
+    iosBundleId: 'com.br.vocably',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

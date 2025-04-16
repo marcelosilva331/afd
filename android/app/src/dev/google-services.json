@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:159053673523:android:26c2ab65a8e40e75e2df46",
         "android_client_info": {
-          "package_name": "com.example.vocably"
+          "package_name": "com.br.vocably"
         }
       },
       "oauth_client": [],
@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:159053673523:android:5085304cae191a94e2df46",
         "android_client_info": {
-          "package_name": "com.example.vocably.dev"
+          "package_name": "com.br.vocably.dev"
         }
       },
       "oauth_client": [],

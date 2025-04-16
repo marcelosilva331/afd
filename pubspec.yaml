@@ -104,10 +104,10 @@ flavorizr:
         name: "dev" 
       
       android: 
-        applicationId: "com.example.vocably.dev"
+        applicationId: "com.br.vocably.dev"
     prd: 
       app:
         name: "prd" 
       
       android: 
-        applicationId: "com.example.vocably"
+        applicationId: "com.br.vocably"

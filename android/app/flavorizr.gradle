@@ -4,12 +4,12 @@ android {
     productFlavors {
         dev {
             dimension "flavor-type"
-            applicationId "com.example.vocably.dev"
+            applicationId "com.br.vocably.dev"
             resValue "string", "app_name", "dev"
         }
         prd {
             dimension "flavor-type"
-            applicationId "com.example.vocably"
+            applicationId "com.br.vocably"
             resValue "string", "app_name", "Vocably"
         }
     }
