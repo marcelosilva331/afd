@@ -71,7 +71,9 @@ Future<void> _logAnalyticsStartupEvent() async {
 }
 
 Future<void> _performEnvironmentSpecificActions() async {
-  if (F.appFlavor == Flavor.prd) {
-    await FirebaseFirestore.instance.collection("env").add({'env': 'PRD'});
+  if (F.appFlavor == Flavor.dev) {
+    await FirebaseFirestore.instance
+        .collection("testeToogle")
+        .add({'env': 'PRD'});
   }
 }
