@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vocably/configs/analytics_service.dart';
 import 'package:vocably/configs/injector.dart';
+import 'package:vocably/configs/theme/custom_theme.dart';
 import 'app.dart';
 import 'flavors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,7 +19,13 @@ void main() async {
 
   await _initializeApp();
 
-  runApp(const App());
+  runApp(MaterialApp(
+      title: 'Custom Theme App',
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
+      home: const App()));
 }
 
 Future<void> _initializeApp() async {
