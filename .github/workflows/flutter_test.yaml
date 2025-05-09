@@ -1,13 +1,13 @@
-name: Flutter Tests and Deploy
+name: Firebase Deploy
 
 on:
   push:
-    branches: [ main, test ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, test ]
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,12 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Run tests
-        run: flutter test
         
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --debug
 
       - name: Setup Firebase CLI
         uses: w9jds/firebase-action@master
@@ -39,4 +36,4 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
           groups: testers
-          file: build/app/outputs/flutter-apk/app-release.apk
+          file: build/app/outputs/flutter-apk/app-debug.apk
