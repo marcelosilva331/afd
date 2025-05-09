@@ -24,7 +24,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       home: const App()));
 }
 

@@ -15,7 +15,7 @@ class WordListRepositoryImpl implements IWordListRepository {
 
   // Initialize the database
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'word_lists.db');
+    String path = join(await getDatabasesPath(), 'word_lists3.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -32,6 +32,7 @@ class WordListRepositoryImpl implements IWordListRepository {
       CREATE TABLE words(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         text TEXT NOT NULL,
+        meaning TEXT NOT NULL,
         list_id INTEGER,
         FOREIGN KEY(list_id) REFERENCES wordList(id)
       )
@@ -50,10 +51,10 @@ class WordListRepositoryImpl implements IWordListRepository {
 
   // Add a word to a list
   @override
-  AsyncResult addWord(Word word, int listId) async {
+  AsyncResult addWord(Word word, int listId, String meaning) async {
     final db = await database;
-    final resultInsert =
-        await db.insert('words', {'text': word.text, 'list_id': listId});
+    final resultInsert = await db.insert(
+        'words', {'text': word.text, 'list_id': listId, 'meaning': meaning});
     if (resultInsert == 1) {
       return Success(resultInsert);
     }
@@ -87,7 +88,8 @@ class WordListRepositoryImpl implements IWordListRepository {
       return Success(result
           .map((map) => Word(
               id: int.parse(map['id'].toString()),
-              text: map['text'].toString()))
+              text: map['text'].toString(),
+              meaning: map['meaning'].toString()))
           .toList());
     } catch (e) {
       return Failure(Exception());

@@ -7,9 +7,12 @@ import 'package:vocably/configs/remote_config/remote_config_strings.dart';
 import 'package:vocably/configs/remote_config/remove_config_service.dart';
 import 'package:vocably/configs/theme/theme_controller.dart';
 import 'package:vocably/flavors.dart';
+import 'package:vocably/viewModels/word_view_model.dart';
 import 'integration_main.dart' as app;
 
 class RemoteConfigServiceMock extends Mock implements RemoteConfigService {}
+
+class WordViewModelMock extends Mock implements WordViewModel {}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +24,8 @@ void main() {
     remoteConfigService = RemoteConfigServiceMock();
 
     GetIt.instance.registerSingleton<ThemeController>(themeController);
+    GetIt.instance.registerSingleton<WordViewModel>(WordViewModelMock());
+
     GetIt.instance
         .registerFactory<RemoteConfigService>((() => remoteConfigService));
 
@@ -29,8 +34,8 @@ void main() {
         .thenAnswer((invocation) => Future.value(true));
   });
 
-  group('description', () {
-    testWidgets('Testa widget com GetIt', (WidgetTester tester) async {
+  group('App integration test', () {
+    testWidgets('Adiciona nova palavra', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       expect(find.text('Vocably'), findsOneWidget);

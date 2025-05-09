@@ -6,7 +6,7 @@ abstract interface class IWordListRepository {
   AsyncResult createList(String title);
   AsyncResult deleteList(int listId);
   AsyncResult<List<WordList>> getLists();
-  AsyncResult addWord(Word word, int listId);
+  AsyncResult addWord(Word word, int listId, String meaning);
   AsyncResult deleteWord(int wordId);
   AsyncResult<List<Word>> getWords(int listId);
 }

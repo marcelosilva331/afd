@@ -8,6 +8,8 @@ class WordViewModel extends ChangeNotifier {
   final IWordListRepository _iWordListRepository;
 
   List<WordList> wordsList = [];
+  List<Word> words = [];
+
   var error = false;
   var loading = false;
 
@@ -46,5 +48,24 @@ class WordViewModel extends ChangeNotifier {
     }, (failure) {
       _changeErrorState(false);
     });
+  }
+
+  void getWordList(int id) async {
+    _changeLoadingState(true);
+    final result = await _iWordListRepository.getWords(id);
+    result.fold((success) {
+      _changeLoadingState(false);
+      _changeErrorState(false);
+      words = [];
+      words = result.getOrDefault([]);
+      notifyListeners();
+    }, (failure) {
+      _changeErrorState(true);
+    });
+  }
+
+  void addWord(Word word, int listId) async {
+    await _iWordListRepository.addWord(word, listId, word.meaning);
+    getWordList(listId);
   }
 }

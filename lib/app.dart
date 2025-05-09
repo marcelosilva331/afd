@@ -4,6 +4,7 @@ import 'package:vocably/configs/remote_config/remote_config_strings.dart';
 import 'package:vocably/configs/remote_config/remove_config_service.dart';
 import 'package:vocably/configs/theme/custom_theme.dart';
 import 'package:vocably/configs/theme/theme_controller.dart';
+import 'package:vocably/pages/word_page.dart';
 import 'package:vocably/viewModels/word_view_model.dart';
 
 class App extends StatefulWidget {
@@ -114,9 +115,17 @@ class _AppState extends State<App> {
             itemCount: _viewModel.wordsList.length,
             itemBuilder: (context, index) {
               final wordListIndex = _viewModel.wordsList[index];
-              return ListTile(
-                title: Text(wordListIndex.title),
-                subtitle: Text(wordListIndex.words.length.toString()),
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => WordPage(wordList: wordListIndex)));
+                },
+                child: ListTile(
+                  title: Text(wordListIndex.title),
+                  subtitle: Text(wordListIndex.words.length.toString()),
+                ),
               );
             },
           );
